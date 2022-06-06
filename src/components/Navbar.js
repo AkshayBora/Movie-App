@@ -1,8 +1,9 @@
-import React from "react";
-// import { data } from '../data';
+import React, { Component } from "react";
 import { addMovieToList, handleMovieSearch } from '../actions';
+import { data } from '../data';
+import { StoreContext } from '..';
 
-class Navbar extends React.Component {
+class Navbar extends Component {
 
     constructor (props) {
         super(props);
@@ -13,9 +14,9 @@ class Navbar extends React.Component {
 
     handleAddToMovies = (movie) => {
         this.props.dispatch(addMovieToList(movie));
-        this.setState({
-            showSearchResults: false
-        });
+        // this.setState({
+        //     showSearchResults: false
+        // });
     }
 
     handleSearch = () => {
@@ -30,14 +31,14 @@ class Navbar extends React.Component {
     }
 
     render() {
-        const { result: movie, showSearchResults } = this.props.search;
+        const { showSearchResults, results: movie } = this.props.search;
         return (
             <div className="nav">
                 <div className="search-container">
                     <input onChange={this.handleChange}/>
                     <button id="search-btn" onClick={this.handleSearch}>Search</button>
                 
-                    {showSearchResults && 
+                    {showSearchResults && (
                         <div className="search-results">
                             <div className="search-result">
                                 <img src={movie.Poster} alt="search-pic" />
@@ -50,11 +51,24 @@ class Navbar extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    }
+                    )}
                 </div>
             </div>
         );
     };
 }
 
-export default Navbar;
+class NavbarWrapper extends React.Component {
+  render() {
+    return (
+      <StoreContext.Consumer>
+        {(store) => (
+          <Navbar dispatch={store.dispatch} search={this.props.search}/>
+        )}
+      </StoreContext.Consumer>
+    );
+  }
+}
+
+// export default Navbar;
+export default NavbarWrapper;

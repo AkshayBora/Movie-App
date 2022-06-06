@@ -24,7 +24,7 @@ export function addMovies (movies) {
     }
 } 
 
-export function addFavourite (movie) {
+export function addToFavourites (movie) {
     return {
         type: ADD_TO_FAVOURITES,
         movie // shorthand movies : movies
@@ -52,10 +52,9 @@ export function addMovieToList (movie) {
     }
 }
 
-export function handleMovieSearch(movie) {
-    const url = `http://www.omdbapi.com/?t=${movie}&apikey=3ca5df7`;
-
+export function handleMovieSearch(searchText) {
     return function (dispatch) {
+        const url = `http://www.omdbapi.com/?t=${searchText}&apikey=3ca5df7`;
         fetch(url)
             .then(response => response.json())
             .then(movie =>

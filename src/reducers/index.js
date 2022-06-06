@@ -15,7 +15,7 @@ const initialMoviesState = {
 };
 
 export function movies (state = initialMoviesState, action) {
-    console.log("MOVIES REDUCER");
+    // console.log("MOVIES REDUCER");
     // if (action.type === ADD_MOVIES) {
     //     return {
     //         ...state,
@@ -29,7 +29,7 @@ export function movies (state = initialMoviesState, action) {
             return {
                 ...state,
                 list: action.movies
-            }
+            }; // returning a new array not changing in state
         case ADD_TO_FAVOURITES:
             return {
                 ...state,
@@ -37,7 +37,7 @@ export function movies (state = initialMoviesState, action) {
             }
         case REMOVE_FROM_FAVOURITES:
             const filteredArray = state.favourites.filter(
-                movie => movie.Title !== action.movie.Title
+                (movie) => movie.Title !== action.movie.Title
             );
 
             return {
@@ -60,7 +60,7 @@ export function movies (state = initialMoviesState, action) {
 }
 
 const initialSearchState = {
-    result: {},
+    results: {},
     showSearchResults: false
 };
 
@@ -69,7 +69,7 @@ export function search (state = initialSearchState, action) {
         case ADD_SEARCH_RESULT:
             return {
                 ...state,
-                result: action.movie,
+                results: action.movie,
                 showSearchResults: true
             }
         case ADD_MOVIE_TO_LIST:
